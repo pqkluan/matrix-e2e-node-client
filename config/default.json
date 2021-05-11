@@ -1,0 +1,12 @@
+{
+  "homeserver": {
+    "url": "http://localhost:8008"
+  },
+  "auth": {
+    "userId": "@luan0:pqkluan.local",
+    "deviceId": "node_server",
+    "accessToken": "MDAxYmxvY2F0aW9uIHBxa2x1YW4ubG9jYWwKMDAxM2lkZW50aWZpZXIga2V5CjAwMTBjaWQgZ2VuID0gMQowMDI3Y2lkIHVzZXJfaWQgPSBAbHVhbjA6cHFrbHVhbi5sb2NhbAowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IH4maUg9LWJ1JnNEOTVMRTsKMDAyZnNpZ25hdHVyZSDlAWJEayzgTYRoNtJRTeVUKwshJq65grEwTY8-AwbMEQo",
+    "passPhrase": "388640d7-31d3-4f62-9e69-b9e97aac3056",
+    "recoveryCode": "EsTE CrMt W3xt AtzQ kfDw 1ceS JsNX kD61 q3Fw KWFJ 2dwE TTEf"
+  }
+}

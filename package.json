@@ -1,0 +1,19 @@
+{
+  "name": "matrix-node-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.6",
+    "matrix-js-sdk": "^10.1.0",
+    "node-localstorage": "^2.1.6",
+    "olm": "https://packages.matrix.org/npm/olm/olm-3.2.1.tgz",
+    "text-encoding": "^0.7.0"
+  }
+}
