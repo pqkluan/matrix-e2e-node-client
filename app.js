@@ -2,10 +2,11 @@ require("./polyfill");
 
 const config = require("config");
 const sdk = require("matrix-js-sdk");
-const { deriveKey } = require("matrix-js-sdk/lib/crypto/key_passphrase");
+const { decodeRecoveryKey } = require("matrix-js-sdk/lib/crypto/recoverykey");
 
 const userId = config.get("auth.userId");
-const passPhrase = config.get("auth.passPhrase");
+// const passPhrase = config.get("auth.passPhrase");
+const recoveryCode = config.get("auth.recoveryCode");
 
 const client = sdk.createClient({
   baseUrl: config.get("homeserver.url"),
@@ -20,37 +21,26 @@ const client = sdk.createClient({
   cryptoCallbacks: {
     async getSecretStorageKey({ keys: keyInfos }) {
       // Figure out the storage key id + info
-      const tuple = await (async () => {
+      const keyId = await (async () => {
         const defaultKeyId = await client.getDefaultSecretStorageKeyId();
-
-        if (defaultKeyId && keyInfos[defaultKeyId]) {
-          // Use the default SSSS key if set
-          return [defaultKeyId, keyInfos[defaultKeyId]];
-        }
+        // Use the default SSSS key if set
+        if (defaultKeyId) return defaultKeyId;
 
         // If no default SSSS key is set, fall back to a heuristic of using the only available key, if only one key is set
-        const entries = Object.entries(keyInfos);
+        const keys = Object.keys(keyInfos);
 
-        if (entries.length > 1) {
+        if (keys.length > 1) {
           throw new Error("Multiple storage key requests not implemented");
         }
 
-        return entries[0];
+        return keys[0];
       })();
 
-      if (!tuple || !Array.isArray(tuple)) {
-        throw new Error("No available key id + info found");
+      if (!keyId) {
+        throw new Error("No available key id found");
       }
 
-      const [keyId, keyInfo] = tuple;
-
-      const key = await deriveKey(
-        passPhrase,
-        keyInfo.passphrase.salt,
-        keyInfo.passphrase.iterations
-      );
-
-      return [keyId, key];
+      return [keyId, decodeRecoveryKey(recoveryCode)];
     },
   },
 });
